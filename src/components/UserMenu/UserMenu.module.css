@@ -1,0 +1,54 @@
+.userWrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .name{
+    font-size: 25px;
+  font-weight: 100px;
+  background-image:linear-gradient(to right, #553c9a 45%, #ee4b2b);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  }
+
+  .button {
+    display: inline-flex;
+    margin: 10px;
+    text-decoration: none;
+    border: 2px solid #BFE2FF;
+    position: relative;
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 10px;
+    padding: 5px 10px;
+    color: #FFF;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', Тahoma, sans-serif;
+    background: #337AB7;
+    transition: box-shadow 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+.button:hover,
+.button:active,
+.button:focus {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
+    color: #FFF;
+}
+.button:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, transparent, rgba(191, 226, 255, 0.3), transparent);
+    transition: left 0.7s;
+}
+.button:hover:before,
+.button:active:before,
+.button:focus:before {
+    left: 100%;
+}
