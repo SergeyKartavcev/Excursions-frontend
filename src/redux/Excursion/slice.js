@@ -1,36 +1,74 @@
-import { combineReducers, createReducer } from '@reduxjs/toolkit';
-import excursionsActions from './actions';
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import {
+  fetchExcursions,
+  fetchExcursionItem,
+  addExcursion,
+  deleteExcursion,
+} from "./operations";
 
-const item = createReducer([], {
-  [excursionsActions.fetchExcursionsSuccess]: (_, { payload }) => payload,
-  [excursionsActions.addExcursionsSuccess]: (state, { payload }) => [
-    ...state,
-    payload,
-  ],
-  [excursionsActions.deleteExcursionsSuccess]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload),
+const extraActions = [
+  fetchExcursions,
+  fetchExcursionItem,
+  addExcursion,
+  deleteExcursion,
+];
+
+const excursionsInitialState = {
+  items: [],
+  isLoading: false,
+  error: null,
+  excursionItem: {},
+};
+
+const excursionsSlice = createSlice({
+  name: "excursions",
+  initialState: excursionsInitialState,
+  extraReducers: (builder) =>
+    builder
+    .addCase(fetchExcursions.fulfilled, (state, action) => {
+      state.items = action.payload;
+    })
+      .addCase(fetchExcursionItem.fulfilled, (state, action) => {
+        state.excursionItem = action.payload;
+      })
+      .addCase(addExcursion.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+      })
+      .addCase(deleteExcursion.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (excursion) => excursion._id === action.payload.id
+        );
+        state.items.splice(index, 1);
+      })
+      .addMatcher(
+        isAnyOf(...extraActions.map((action) => action.pending)),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(...extraActions.map((action) => action.rejected)),
+        (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        }
+      )
+      .addMatcher(
+        isAnyOf(...extraActions.map((action) => action.fulfilled)),
+        (state) => {
+          state.isLoading = false;
+          state.error = null;
+        }
+      ),
+  reducers: {
+    clearExcursionItem(state) {
+      state.excursionItem = {};
+    },
+    clearExcursions(state) {
+      state.items = [];
+    },
+  },
 });
 
-const filter = createReducer('', {
-  [excursionsActions.changeFilter]: (_, { payload }) => payload,
-});
-
-const isLoading = createReducer(false, {
-  [excursionsActions.addExcursionsRequest]: () => true,
-  [excursionsActions.addExcursionsSuccess]: () => false,
-  [excursionsActions.addExcursionsError]: () => false,
-
-  [excursionsActions.fetchExcursionsRequest]: () => true,
-  [excursionsActions.fetchExcursionsSuccess]: () => false,
-  [excursionsActions.fetchExcursionsError]: () => false,
-
-  [excursionsActions.deleteExcursionsRequest]: () => true,
-  [excursionsActions.deleteExcursionsSuccess]: () => false,
-  [excursionsActions.deleteExcursionsError]: () => false,
-});
-
-export default combineReducers({
-  item,
-  filter,
-  isLoading,
-});
+export const { clearExcursionItem, clearExcursions } = excursionsSlice.actions;
+export const excursionsReducer = excursionsSlice.reducer;

@@ -9,6 +9,25 @@ import { selectExcursions } from '../../redux/Excursion/selectors';
 import { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import ExcursionModal from '../../components/Excursion/ExcursionModal';
+
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const HoverText = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+`; 
 const ExcursionWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,12 +40,36 @@ const ExcursionWrapper = styled.div`
   margin: 10px;
   color: black;
   flex-basis: 300px;
+  position: relative;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  z-index: 1;
+  transition: background-color 0.2s ease;
+
+  &:hover ${HoverText} {
+    display: block;
+    background-color: #f1f1f1;
+  }
+`;
+
+
+
+
+ExcursionWrapper.hover = styled(ExcursionWrapper)`
+  &:hover ${HoverText} {
+    opacity: 0.8;
+  }
 `;
 
 const ExcursionTitle = styled.h2`
-  font-size: 14px;
-  margin-bottom: 10px;
-  color: black;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  color: ${props => props.theme.colors.black};
   word-break: break-all;
 `;
 
@@ -37,14 +80,6 @@ const ExcursionImage = styled.img`
   margin-bottom: 10px;
 `;
 
-const ExcursionPrice = styled.p`
-  font-size: 18px;
-  margin-bottom: 10px;
-`;
-
-const ExcursionDescription = styled.p`
-  font-size: 16px;
-`;
 
 const Container = styled.div`
   margin: 0 auto;
@@ -65,12 +100,12 @@ const Excursions = () => {
   const [showExcursionModal, setShowExcursionModal] = useState(false);
   const [selectedExcursionId, setSelectedExcursionId] = useState(null);
   const dispatch = useDispatch();
-  const excursions = useSelector(selectExcursions);
-
+ 
   useEffect(() => {
     dispatch(fetchExcursions());
   }, [dispatch]);
-
+  const excursions = useSelector(selectExcursions);
+  console.log(excursions)
   const handleDeleteExcursion = (_id) => {
     dispatch(deleteExcursion(_id));
   };
@@ -95,6 +130,7 @@ const Excursions = () => {
 
   return (
     <Container>
+
       <ButtonContainer>
         <Button onClick={handleOpenModal}>Відкрити</Button>
       </ButtonContainer>
@@ -104,12 +140,11 @@ const Excursions = () => {
         <Grid container spacing={3}>
           {excursions.map((excursion) => (
             <Grid item xs={12} sm={6} md={4} key={excursion._id}>
+              <Wrapper>
            <ExcursionWrapper onClick={() => handleOpenExc(excursion._id, console.log(excursion._id))}>
-
                 <ExcursionTitle>{excursion.title}</ExcursionTitle>
                 <ExcursionImage src={excursion.img} alt={excursion.title} />
-                <ExcursionPrice>{excursion.price}</ExcursionPrice>
-                <ExcursionDescription>{excursion.description}</ExcursionDescription>
+                <HoverText>Натисніть щоб побачити розгорнуту інформацію</HoverText>
                 <Button
                   color='secondary'
                   type='button'
@@ -117,7 +152,7 @@ const Excursions = () => {
                 >
                   <DeleteIcon />
                 </Button>
-              </ExcursionWrapper>
+              </ExcursionWrapper></Wrapper>
             </Grid>
           ))}
         </Grid>

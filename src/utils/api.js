@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const api = axios.create({
   baseURL: 'http://localhost:5000/',
-//   baseURL: 'https://pet-support.onrender.com/api',
+ 
 });
 
 export const setAuthHeader = token => {
@@ -13,3 +13,5 @@ export const setAuthHeader = token => {
 export const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = '';
 };
+
+

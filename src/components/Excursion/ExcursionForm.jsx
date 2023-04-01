@@ -17,7 +17,7 @@ import {
   ModalOverlay,
   ModalContent,
   Background,
-} from "./ExcursionForm.styled";
+} from "./Excursion.styled";
 
 export default function ExcursionForm({ showModal, setShowModal }) {
   const [img, setImg] = useState(null);

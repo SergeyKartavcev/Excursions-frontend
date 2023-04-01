@@ -1,20 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-export const selectExcursions = state => state.excursions.item;
-
+export const selectExcursions = state => state.excursions.items;
+export const selectExcursionItem = state => state.excursions.excursionItem;
 
 export const selectIsLoadingExcursion = state => state.excursions.isLoading;
 export const selectError = state => state.excursions.error;
-// export const selectFilter = state =>state.excursions.filter ;
 
 
-// export const selectFilteredExcursions = createSelector(
-//     [selectExcursions, selectFilter],
-//     (excursions, filter) =>
-//     excursions.filter(excursion =>
-//       excursion.title.includes(filter),
-//     ),
-//   );
+
 
  
   export const selectIsAdded = createSelector([selectExcursions], excursions => {

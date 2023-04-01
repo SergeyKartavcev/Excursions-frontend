@@ -1,7 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import {
-  persistStore,
   persistReducer,
+  persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -10,8 +10,10 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import excursionsReducer from './Excursion/slice'
 import { authReducer } from './auth/slice';
+import { excursionsReducer } from './Excursion/slice';
+
+
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -21,7 +23,6 @@ const middleware = [
   }),
 ];
 
-// Persisting token field from auth slice to localstorage
 const authPersistConfig = {
   key: 'auth',
   storage,
@@ -34,7 +35,6 @@ export const store = configureStore({
     excursions: excursionsReducer,
   },
   middleware,
-  devTools: process.env.NODE_ENV === 'development',
 });
 
 export const persistor = persistStore(store);

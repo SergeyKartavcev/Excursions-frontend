@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-
-
 export const FileBox = styled.div`
   margin-top: 10px;
   width: 140px;
@@ -36,8 +34,6 @@ export const AddedImage = styled.div`
     height: 182px;
   }
 `;
-
-
 
 export const Error = styled.div`
   position: absolute;
@@ -87,16 +83,13 @@ export const ModalContent = styled.div`
     width: 420px;
   }
 `;
- 
 
 export const Form = styled.form`
-/* position: absolute;
-top:0; */
   width: 240px;
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet[0]}) {
     width: 448px;
     position: absolute;
-top:0;
+    top: 0;
   }
 `;
 
@@ -144,7 +137,6 @@ export const Label = styled.label`
   }
 `;
 
-
 export const Button = styled.button`
   display: block;
   align-items: center;
@@ -168,5 +160,87 @@ export const Button = styled.button`
   :hover {
     color: ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.accent};
+  }
+`;
+
+//модальное окно для карточки
+
+export const ModalWrapper = styled.div`
+  width: 200px;
+  height: auto;
+  background: ${(props) => props.theme.colors.white};
+  border-radius: 20px;
+  @media (min-width: 768px) {
+    width: 1000px;
+    height: 620px;
+    padding: 40px 80px;
+  }
+`;
+
+export const Content = styled.div`
+  width: 100%;
+  height: 100%;
+
+
+  @media (min-width: 768px) {
+    width: 100%;
+    height: 100%;
+    
+  }
+`;
+
+export const Wrapper = styled.div`
+  border: 2px solid #f59256;
+  border-radius: 20px;
+ 
+  /* padding: 10px; */
+  margin-bottom: 100px;
+  color: black;
+  flex-basis: 300px;
+  height: 600px;
+  @media (min-width: 768px) {
+    display: flex;
+    width: 1000px;
+    height: 650px;
+  }
+`;
+
+export const ExcursionTitle = styled.h2`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  color: ${props => props.theme.colors.black};
+  word-break: break-all;
+`;
+
+export const Image = styled.img`
+  width: 500px;
+  height: 400px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  @media (min-width: 768px){
+    width: 600px;
+  height: 100%;
+  }
+`;
+
+export const ExcursionPrice = styled.p`
+  font-size: 18px;
+  margin-bottom: 10px;
+`;
+
+export const ExcursionDescription = styled.p`
+  font-size: 16px;
+`;
+
+export const Div = styled.div`
+
+margin-left: 10px;
+
+  @media (min-width: 768px) {
+    margin-left: 20px;
   }
 `;
