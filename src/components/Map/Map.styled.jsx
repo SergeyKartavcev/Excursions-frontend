@@ -71,21 +71,21 @@ export const Form = styled.form`
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet[0]}) {
     width: 448px;
     position: absolute;
-    top: 0;
+    top: 40px;
   }
 `;
 
 export const Input = styled.input`
   width: 100%;
-  height: 40px;
+  height: 20px;
   background: #fdf7f2;
   border: 1px solid rgba(245, 146, 86, 0.5);
   border-radius: 40px;
-  margin-bottom: 10px;
-  padding: 10px 20px 8px 20px;
+
+  padding: 5px 20px 8px 20px;
   @media (min-width: 768px) {
     width: 100%;
-    height: 48px;
+    height: 40px;
     margin-bottom: ${(props) => (props.bottom ? "15px" : "15px")};
   }
   ::placeholder {
@@ -111,7 +111,7 @@ export const Label = styled.label`
   @media (min-width: 768px) {
     height: 27px;
     margin-bottom: 12px;
-    margin-top: ${(props) => (props.top ? "60px" : "28px")};
+    /* margin-top: ${(props) => (props.top ? "60px" : "28px")}; */
     font-weight: 500;
     font-size: 24px;
     line-height: 26px;

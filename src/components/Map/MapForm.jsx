@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, {  useEffect, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useFormik } from "formik";
 import { addMap } from "../../redux/map/operations";
 import { selectIsLoadingMap } from "../../redux/map/selectors";
@@ -16,7 +16,6 @@ import {
 } from "./Map.styled";
 
 export default function ExcursionForm({ openModal, setOpenModal }) {
-
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -27,30 +26,27 @@ export default function ExcursionForm({ openModal, setOpenModal }) {
       zoom: "",
     },
     onSubmit: (values) => {
-        const data = new FormData();
-        data.append("title", values.title);
-        data.append("link", values.link);
-        data.append("location", values.location);
-        data.append("zoom", values.zoom);
-        const fields = {
-          title: values.title,
-          link: values.link,
-          location: values.location,
-          zoom: values.zoom,
-        };
-      
-        dispatch(addMap(fields));
-        closeModal();
-      },
-      
+      const data = new FormData();
+      data.append("title", values.title);
+      data.append("link", values.link);
+      data.append("location", values.location);
+      data.append("zoom", values.zoom);
+      const fields = {
+        title: values.title,
+        link: values.link,
+        location: {
+          lat: values.latitude,
+          lng: values.longitude,
+        },
+        zoom: values.zoom,
+      };
+
+      dispatch(addMap(fields));
+      closeModal();
+    },
   });
 
-  
-
-const isLoading = useSelector(selectIsLoadingMap);
-
-
-
+  const isLoading = useSelector(selectIsLoadingMap);
 
   const keyPress = useCallback(
     (e) => {
@@ -71,7 +67,6 @@ const isLoading = useSelector(selectIsLoadingMap);
     setOpenModal((prev) => !prev);
     formik.resetForm();
   };
-
 
   return (
     <>
@@ -94,8 +89,7 @@ const isLoading = useSelector(selectIsLoadingMap);
                   <Error>{formik.errors.title}</Error>
                 ) : null}
 
-              
-                <Label htmlFor="text">Video:</Label>
+                <Label htmlFor="text">map:</Label>
                 <Input
                   bottom
                   onChange={formik.handleChange}
@@ -105,19 +99,26 @@ const isLoading = useSelector(selectIsLoadingMap);
                   placeholder="link"
                   onBlur={formik.handleBlur}
                 />
-                <Label htmlFor="text">Tittle of ad</Label>
+                <Label htmlFor="text">latitude:</Label>
                 <Input
                   onChange={formik.handleChange}
                   type="text"
-                  name="location"
-                  value={formik.values.location}
-                  placeholder="Type location"
+                  name="latitude"
+                  value={formik.values.latitude}
+                  placeholder="latitude"
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.location && formik.errors.location ? (
-                  <Error>{formik.errors.location}</Error>
-                ) : null}
-                     <Label htmlFor="text">Video:</Label>
+
+                <Label htmlFor="text">longitude:</Label>
+                <Input
+                  onChange={formik.handleChange}
+                  type="text"
+                  name="longitude"
+                  value={formik.values.longitude}
+                  placeholder="longitude"
+                  onBlur={formik.handleBlur}
+                />
+                <Label htmlFor="text">zoom:</Label>
                 <Input
                   bottom
                   onChange={formik.handleChange}
@@ -127,9 +128,7 @@ const isLoading = useSelector(selectIsLoadingMap);
                   placeholder="zoom"
                   onBlur={formik.handleBlur}
                 />
-                <Button type="submit" >
-                  Відправити
-                </Button>
+                <Button type="submit">Відправити</Button>
               </Form>
             </ModalContent>
           </ModalOverlay>
@@ -138,4 +137,3 @@ const isLoading = useSelector(selectIsLoadingMap);
     </>
   );
 }
-
