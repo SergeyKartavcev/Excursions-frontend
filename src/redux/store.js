@@ -12,8 +12,8 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth/slice';
 import { excursionsReducer } from './Excursion/slice';
-
-
+import { videosReducer } from './videos/slice';
+import { mapReducer } from './map/slice';
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -33,6 +33,8 @@ export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
     excursions: excursionsReducer,
+    videos: videosReducer,
+    map: mapReducer,
   },
   middleware,
 });

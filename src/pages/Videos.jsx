@@ -1,50 +1,41 @@
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {  fetchExcursions } from '../../redux/Excursion/operations';
+import {  fetchVideos } from '../../src/redux/videos/operations';
 // import DeleteIcon from '@mui/icons-material/Delete'
 import styled from 'styled-components';
-import ExcursionForm from '../../components/Excursion/ExcursionForm';
+import VideosForm from '../components/Videos/VideosForm';
 // import { selectUserRole } from '../../redux/auth/selectors';
-import { selectExcursions } from '../../redux/Excursion/selectors';
+import { selectVideos } from '../redux/videos/selectors';
 import { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
-import ExcursionModal from '../../components/Excursion/ExcursionModal';
+// import YouTube from 'react-youtube';
+import VideoLink from '../components/Videos/VideoLink';
 
+const Videos = () => {
+  const [openModal, setOpenModal] = useState(false);
 
-
-const Excursions = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [showExcursionModal, setShowExcursionModal] = useState(false);
-  const [selectedExcursionId, setSelectedExcursionId] = useState(null);
   const dispatch = useDispatch();
  
   useEffect(() => {
-    dispatch(fetchExcursions());
+    dispatch(fetchVideos());
   }, [dispatch]);
-  const excursions = useSelector(selectExcursions);
-  console.log(excursions)
+
+  const videos = useSelector(selectVideos);
+  console.log(videos)
 
   // const handleDeleteExcursion = (_id) => {
   //   dispatch(deleteExcursion(_id));
   // };
 
   const handleOpenModal = () => {
-    setShowModal(true);
+    setOpenModal(true);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setOpenModal(false);
   };
 
-  const handleOpenExc = (_id) => {
-    setSelectedExcursionId(_id);
-    setShowExcursionModal(true);
-  };
-  
-  const handleCloseExc = () => {
-    setSelectedExcursionId(null);
-    setShowExcursionModal(false);
-  };
+
 
   return (
     <Container>
@@ -52,17 +43,17 @@ const Excursions = () => {
       <ButtonContainer>
         <Button onClick={handleOpenModal}>Відкрити</Button>
       </ButtonContainer>
-      <ExcursionForm showModal={showModal} setShowModal={setShowModal} handleCloseModal={handleCloseModal} />
-      {excursions.length === 0 && <p>Немає доступних екскурсій</p>}
-      {excursions.length > 0 && (
+      <VideosForm openModal={openModal} setOpenModal={setOpenModal} handleCloseModal={handleCloseModal} />
+      {videos.length === 0 && <p>Немає доступних екскурсій</p>}
+      {videos.length > 0 && (
         <Grid container spacing={3}>
-          {excursions.map((excursion) => (
-            <Grid item xs={12} sm={6} md={4} key={excursion._id}>
+          {videos.map((video) => (
+            <Grid item xs={12} sm={6} md={4} key={video._id}>
              
-           <ExcursionWrapper >
-                <ExcursionTitle>{excursion.title}</ExcursionTitle>
-                <ExcursionImage src={excursion.img} alt={excursion.title} />
-                <ButtonS onClick={() => handleOpenExc(excursion._id, console.log(excursion._id))} >Відкрити</ButtonS>
+           <VideoWrapper >
+                <VideoTitle>{video.title}</VideoTitle>
+                <VideoLink href={video.link} />
+               
                 {/* <Button
                   color='secondary'
                   type='button'
@@ -70,18 +61,10 @@ const Excursions = () => {
                 >
                   <DeleteIcon />
                 </Button> */}
-              </ExcursionWrapper>
+              </VideoWrapper>
             </Grid>
           ))}
         </Grid>
-      )}
-       {selectedExcursionId && (
-        <ExcursionModal 
-          excursionId={selectedExcursionId} 
-          handleCloseModal={handleCloseExc} 
-          showModal={showExcursionModal}
-          setShowModal={setShowExcursionModal}
-        />
       )}
     </Container>
   );
@@ -92,14 +75,14 @@ const Excursions = () => {
 
 
 
-const ExcursionWrapper = styled.div`
+const VideoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 280px;
+  width: 350px;
   height: 350px;
-  border: 1px solid #ccc;
+  border: 2px solid blue;
   border-radius: 20px;
   margin: 10px;
   color: black;
@@ -110,30 +93,29 @@ const ExcursionWrapper = styled.div`
 
 `;
 
-
-
-
-
-
-const ExcursionTitle = styled.h2`
+const VideoTitle = styled.h2`
   font-style: normal;
   font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 26px;
+  line-height: 28px;
   letter-spacing: -0.01em;
-  margin-bottom: 20px;
-  color: ${props => props.theme.colors.black};
-  word-break: break-all;
-`;
-
-
-const ExcursionImage = styled.img`
-  width: 95%;
-  height: 70%;
   margin-bottom: 10px;
-  border-radius: 10px;
-  
+  color: ${props => props.theme.colors.black};
+  word-break: keep-all;
+  text-indent: 10px;
 `;
+
+
+// const VideoLink = styled.a`
+//   width: 80%;
+//   height: 80%;
+//   margin-bottom: 10px;
+//   border-radius: 10px;
+//   &:hover {
+//     color: red; // цвет текста ссылки при наведении
+//     text-decoration: none; // убираем подчеркивание ссылки при наведении
+//   }
+// `;
 
 
 export const Container = styled.div`
@@ -170,4 +152,4 @@ const ButtonContainer = styled.div`
 `;
 
 
-export default Excursions;
+export default Videos;

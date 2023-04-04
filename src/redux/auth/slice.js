@@ -91,7 +91,7 @@ import  { register, logIn, logOut, refresh, } from './operations';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: null,
+    user: {},
     token: null,
     isLoggedIn: false,
     isLoading: false,
@@ -103,13 +103,13 @@ const authSlice = createSlice({
     builder
       .addCase(register.pending, (state, action) => state)
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
       .addCase(register.rejected, (state, action) => state)
       .addCase(logIn.fulfilled, (state, action)=> {
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })

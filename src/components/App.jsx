@@ -12,6 +12,8 @@ import { selectIsRefreshing } from '../redux/auth/selectors';
 
 const Home = lazy(() => import('../pages/Home'));
 const Excursions = lazy(() => import('../pages/Excursion/Excursion'));
+const Videos = lazy(() => import('../pages/Videos'));
+const Map = lazy(() => import('../pages/Map'));
 const Register = lazy(() => import('../pages/Register/Register'));
 const Login = lazy(() => import('../pages/Login/Login'));
 
@@ -47,7 +49,20 @@ useEffect(() => {
             <RestrictedRoute redirectTo="/excursions" component={<Excursions />} />
           }
         />
+            <Route
+          path="videos"
+          element={
+            <RestrictedRoute redirectTo="/videos" component={<Videos/>} />
+          }
+        />
+             <Route
+          path="map"
+          element={
+            <RestrictedRoute redirectTo="/map" component={<Map/>} />
+          }
+        />
       </Route>
+      
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>): null }
      
