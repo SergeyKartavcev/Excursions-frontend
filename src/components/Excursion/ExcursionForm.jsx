@@ -53,7 +53,7 @@ export default function ExcursionForm({ showModal, setShowModal }) {
       setImg(URL.createObjectURL(files[0]));
       formik.setFieldValue("img", files[0]);
     }
-    // console.log(files[0]);
+
 
   };
 

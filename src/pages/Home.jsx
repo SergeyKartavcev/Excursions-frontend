@@ -5,8 +5,7 @@ import { selectIsLoggedIn } from '../redux/auth/selectors';
 
 const Home = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
-//  const userName = useSelector(selectUserName);
-//   console.log(userName)
+
   return (
     <Box
     textAlign={'center'}
@@ -21,7 +20,6 @@ const Home = () => {
       bgcolor: 'success.light'
     }}
     >
-      
       <Typography
       alignItems={'center'}
         variant="h2"
@@ -39,7 +37,7 @@ const Home = () => {
         mb={4}
       >
         {isLoggedIn
-          ? `, На вас чекають незабутні пригоди разом з нами !!!`
+          ? ` На вас чекають незабутні пригоди разом з нами !!!`
           : 'зареэструйся щоб слідкувати за нашими новинами!'}
       </Typography>
     </Box>

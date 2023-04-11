@@ -6,29 +6,9 @@ export const AuthNav = () => {
 
   return (
     <Box ml={3} display="flex">
-      <NavLink style={activLink} to="/">
-        <Typography mr={30} variant="h6" >
-          Домашня 
-        </Typography>
-      </NavLink>
-      <NavLink style={activLink} to="/excursions">
-        <Typography mr={3} variant="h6" >
-          Екскурсії
-        </Typography>
-      </NavLink>
-      <NavLink style={activLink}  to="/videos">
-        <Typography mr={3} variant="h6" >
-          Відео
-        </Typography>
-      </NavLink>
-      <NavLink style={activLink} to="/map">
-        <Typography mr={3} variant="h6" >
-          Карта
-        </Typography>
-      </NavLink>
       <NavLink style={activLink} to="/register">
         <Typography mr={3} ml={30} variant="h6" >
-          Руєстрація
+          Реєстрація
         </Typography>
       </NavLink>
       <NavLink style={activLink} to="/login">

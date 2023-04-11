@@ -25,6 +25,7 @@ export default function ExcursionModal({
 
   const isLoading = useSelector(selectIsLoadingExcursion);
 const dispatch = useDispatch();
+
   const keyPress = useCallback(
     (e) => {
       if (e.key === "Escape" && showModal) {
@@ -46,7 +47,6 @@ const dispatch = useDispatch();
   };
 
   useEffect(()=>{
-    console.log('excursionId:', excursionId);
     dispatch(fetchExcursionItem(excursionId));
   }, [dispatch, excursionId]);
   

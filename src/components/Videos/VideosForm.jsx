@@ -40,12 +40,7 @@ export default function ExcursionForm({ openModal, setOpenModal }) {
       
   });
 
-  
-
 const isLoading = useSelector(selectIsLoadingVideo);
-
-
-
 
   const keyPress = useCallback(
     (e) => {

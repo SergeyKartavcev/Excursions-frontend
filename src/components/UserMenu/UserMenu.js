@@ -6,9 +6,9 @@ import {Box, Typography, Button} from '@mui/material';
 export const UserMenu = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const userName = useSelector(selectUserName);
-  console.log(userName)
-  const handleLogOut = () => dispatch(logOut());
+  const name = useSelector(selectUserName);
+  console.log('name ', name)
+
 
   if (!isLoggedIn) {
     return null; // не показывать меню, если пользователь не авторизован
@@ -26,8 +26,8 @@ export const UserMenu = () => {
           p: 1,
           minWidth: 200,
           bgcolor: 'warning.light' 
-        }} >Welcome </Typography>
-      <Button  color="secondary" variant="outlined"  type="button" onClick={handleLogOut}>
+        }} >Welcome {name} </Typography>
+      <Button  color="secondary" variant="outlined"  type="button"  onClick={() => dispatch(logOut())}>
         Logout
       </Button>
     </Box>

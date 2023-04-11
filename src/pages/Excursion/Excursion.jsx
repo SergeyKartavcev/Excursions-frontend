@@ -1,32 +1,32 @@
-import { Button } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import {  fetchExcursions } from '../../redux/Excursion/operations';
-// import DeleteIcon from '@mui/icons-material/Delete'
-import styled from 'styled-components';
-import ExcursionForm from '../../components/Excursion/ExcursionForm';
-// import { selectUserRole } from '../../redux/auth/selectors';
-import { selectExcursions } from '../../redux/Excursion/selectors';
-import { useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
-import ExcursionModal from '../../components/Excursion/ExcursionModal';
-
-
+import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchExcursions } from "../../redux/Excursion/operations";
+import { getUserInfo } from "../../redux/auth/operations";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteExcursion } from "../../redux/Excursion/operations";
+import styled from "styled-components";
+import ExcursionForm from "../../components/Excursion/ExcursionForm";
+import { selectUserRole } from "../../redux/auth/selectors";
+import { selectExcursions } from "../../redux/Excursion/selectors";
+import { useState, useEffect } from "react";
+import { Grid } from "@mui/material";
+import ExcursionModal from "../../components/Excursion/ExcursionModal";
 
 const Excursions = () => {
   const [showModal, setShowModal] = useState(false);
   const [showExcursionModal, setShowExcursionModal] = useState(false);
   const [selectedExcursionId, setSelectedExcursionId] = useState(null);
+
   const dispatch = useDispatch();
- 
+
   useEffect(() => {
+    dispatch(getUserInfo());
     dispatch(fetchExcursions());
   }, [dispatch]);
   const excursions = useSelector(selectExcursions);
-  console.log(excursions)
 
-  // const handleDeleteExcursion = (_id) => {
-  //   dispatch(deleteExcursion(_id));
-  // };
+  const role = useSelector(selectUserRole);
+  console.log("user role", role);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -40,7 +40,7 @@ const Excursions = () => {
     setSelectedExcursionId(_id);
     setShowExcursionModal(true);
   };
-  
+
   const handleCloseExc = () => {
     setSelectedExcursionId(null);
     setShowExcursionModal(false);
@@ -48,37 +48,49 @@ const Excursions = () => {
 
   return (
     <Container>
-
-      <ButtonContainer>
-        <Button onClick={handleOpenModal}>Відкрити</Button>
-      </ButtonContainer>
-      <ExcursionForm showModal={showModal} setShowModal={setShowModal} handleCloseModal={handleCloseModal} />
+      {role === "admin" && (
+        <ButtonContainer>
+          <Button onClick={handleOpenModal}>Відкрити</Button>
+        </ButtonContainer>
+      )}
+      <ExcursionForm
+        showModal={showModal}
+        setShowModal={setShowModal}
+        handleCloseModal={handleCloseModal}
+      />
       {excursions.length === 0 && <p>Немає доступних екскурсій</p>}
       {excursions.length > 0 && (
         <Grid container spacing={3}>
           {excursions.map((excursion) => (
             <Grid item xs={12} sm={6} md={4} key={excursion._id}>
-             
-           <ExcursionWrapper >
+              <ExcursionWrapper>
                 <ExcursionTitle>{excursion.title}</ExcursionTitle>
                 <ExcursionImage src={excursion.img} alt={excursion.title} />
-                <ButtonS onClick={() => handleOpenExc(excursion._id, console.log(excursion._id))} >Відкрити</ButtonS>
-                {/* <Button
-                  color='secondary'
-                  type='button'
-                  onClick={() => handleDeleteExcursion(excursion._id)}
+                <ButtonS
+                  onClick={() =>
+                    handleOpenExc(excursion._id, console.log(excursion._id))
+                  }
                 >
-                  <DeleteIcon />
-                </Button> */}
+                  Відкрити
+                </ButtonS>
+                {role === "admin" && (
+                  <Button
+                    color="secondary"
+                    type="button"
+                    onClick={() => dispatch(deleteExcursion(excursion._id))}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                )}
               </ExcursionWrapper>
             </Grid>
           ))}
         </Grid>
       )}
-       {selectedExcursionId && (
-        <ExcursionModal 
-          excursionId={selectedExcursionId} 
-          handleCloseModal={handleCloseExc} 
+      {selectedExcursionId && (
+        <ExcursionModal
+          excursionId={selectedExcursionId}
+          handleCloseModal={handleCloseExc}
           showModal={showExcursionModal}
           setShowModal={setShowExcursionModal}
         />
@@ -86,11 +98,6 @@ const Excursions = () => {
     </Container>
   );
 };
-
-
-
-
-
 
 const ExcursionWrapper = styled.div`
   display: flex;
@@ -107,13 +114,7 @@ const ExcursionWrapper = styled.div`
   /* position: relative; */
   margin: 10px;
   cursor: pointer;
-
 `;
-
-
-
-
-
 
 const ExcursionTitle = styled.h2`
   font-style: normal;
@@ -122,19 +123,16 @@ const ExcursionTitle = styled.h2`
   line-height: 18px;
   letter-spacing: -0.01em;
   margin-bottom: 20px;
-  color: ${props => props.theme.colors.black};
+  color: ${(props) => props.theme.colors.black};
   word-break: break-all;
 `;
-
 
 const ExcursionImage = styled.img`
   width: 95%;
   height: 70%;
   margin-bottom: 10px;
   border-radius: 10px;
-  
 `;
-
 
 export const Container = styled.div`
   padding: 0 ${({ theme }) => theme.spacing[5]}px;
@@ -153,7 +151,7 @@ export const Container = styled.div`
 `;
 
 export const ButtonS = styled.button`
-  background-color: #008CBA;
+  background-color: #008cba;
   color: white;
   padding: 5px 10px;
   border: none;
@@ -168,6 +166,5 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
   margin-top: 10px;
 `;
-
 
 export default Excursions;

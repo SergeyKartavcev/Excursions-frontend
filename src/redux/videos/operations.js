@@ -26,7 +26,6 @@ export const addVideo = createAsyncThunk('videos/addVideo', async (fields, thunk
   try {
     
     const response = await api.post('/videos', fields);
-    console.log('fields', response.data);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);

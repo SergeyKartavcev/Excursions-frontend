@@ -7,7 +7,6 @@ export const fetchMap = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await api.get(`/map`);
-console.log("responce", response.data)
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -19,9 +18,7 @@ console.log("responce", response.data)
 
 export const addMap = createAsyncThunk('map/addMap', async (fields, thunkAPI) => {
   try {
-    
     const response = await api.post('/map', fields);
-    console.log('fields', response.data);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);

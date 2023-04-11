@@ -1,22 +1,23 @@
 import { register } from '../../redux/auth/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { selectAuthError, selectIsLoggedIn } from '../../redux/auth/selectors';
-import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
+import { selectError, selectIsLoading, selectIsRegistered } from '../../redux/auth/selectors';
+import { Box, Button, TextField,  useTheme } from '@mui/material';
 import Notiflix from 'notiflix';
 import { Loader } from '../Loader';
-import { AUTH_TYPES } from '../constants';
+// import { AUTH_TYPES } from '../constants';
 
-export const RegisterForm = ({ type }) => {
+ const RegisterForm = () => {
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const isLoading = useSelector(selectIsLoggedIn);
-  const error = useSelector(selectAuthError);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
-  const isRegister = type === AUTH_TYPES.REGISTER;
+  const isRegister = useSelector(selectIsRegistered);
   const theme = useTheme();
+
 
   const validateInput = (element, onValidate) => {
     if (element.value.match(element.pattern)) {
@@ -68,26 +69,13 @@ export const RegisterForm = ({ type }) => {
         password: form.elements.password.value,
       })
     );
+    Notiflix.Notify.success('Будь ласка перейдіть на свою пошту і підтвердіть реєстрацію');
     form.reset();
   };
 
   return (
     <>
       {isLoading && <Loader />}
-      <Typography
-        variant="h3"
-        align="center"
-        sx={{
-          bgcolor: 'success.light',
-          fontWeight: 'light',
-          boxShadow: 1,
-          borderRadius: 2,
-          p: 2,
-          minWidth: 300,
-        }}
-      >
-        Registeretion
-      </Typography>
       <Box
         component="form"
         noValidate
@@ -98,7 +86,7 @@ export const RegisterForm = ({ type }) => {
         gap={2}
         maxWidth="500px"
         onSubmit={handleSubmit}
-        autoComplete="off"
+        autoComplete="on"
       >
         <TextField
           type="text"
@@ -114,7 +102,7 @@ export const RegisterForm = ({ type }) => {
             pattern:
               "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$",
           }}
-          autoComplete="off"
+          autoComplete="on"
           focused
           onChange={handleNameChange}
           error={nameError}
@@ -135,7 +123,7 @@ export const RegisterForm = ({ type }) => {
             style: { color: theme.palette.secondary.main },
             pattern: '^([0-9a-zA-Zd_.-])+@(([a-zA-Zd-])+.)+([a-zA-Zd]{2,4})+$',
           }}
-          autoComplete="off"
+          autoComplete="on"
           focused
           onChange={handleEmailChange}
           error={emailError}
@@ -171,3 +159,5 @@ export const RegisterForm = ({ type }) => {
     </>
   );
 };
+
+export default RegisterForm;

@@ -1,5 +1,5 @@
 import { BackgroundContainer, Container, Main, Title } from "./Register.styled";
-import AuthForm from "../../components/AuthForm/AuthForm";
+import RegisterForm from "../../components/RegisterForm/RegisterForm";
 
 
 
@@ -12,7 +12,7 @@ const RegisterPage = () => {
         <BackgroundContainer>
           <>
             <Title>Registration</Title>
-            <AuthForm />
+            <RegisterForm />
           </>
         </BackgroundContainer>
       </Container>

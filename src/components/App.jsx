@@ -1,14 +1,12 @@
-import { RestrictedRoute } from './RestrictedRoute';
-// import { PrivateRoute } from './PrivateRoute';
+
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout';
 import { Navigate } from 'react-router-dom';
 import { lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { refresh } from '../redux/auth/operations';
-// import { useAuth } from '../hooks';
-import { selectIsRefreshing } from '../redux/auth/selectors';
+import { refreshUser } from '../redux/auth/operations';
+import { selectIsRefreshing, selectIsLoggedIn, selectIsRegistered } from '../redux/auth/selectors';
 
 const Home = lazy(() => import('../pages/Home'));
 const Excursions = lazy(() => import('../pages/Excursion/Excursion'));
@@ -20,49 +18,35 @@ const Login = lazy(() => import('../pages/Login/Login'));
 export const App = () => {
   const dispatch = useDispatch();
   // const { isRefreshing } = useAuth();
-const isRefreshing = useSelector(selectIsRefreshing);
-
+  // const isAuthenticated = useSelector(selectIsAuthenticated);
 useEffect(() => {
-  dispatch(refresh());
+  dispatch(refreshUser());
 }, [dispatch]);
+const isRefreshing = useSelector(selectIsRefreshing);
+const isLoggedIn = useSelector(selectIsLoggedIn);
+const isRegistered = useSelector(selectIsRegistered);
+console.log(isRefreshing)
   return (
     <>
     {!isRefreshing ?( <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route />
-        <Route
-          path="register"
-          element={
-            <RestrictedRoute redirectTo="/excursions" component={<Register />} />
-          }
-        />
-        <Route
-          path="login"
-          element={
-            <RestrictedRoute redirectTo="/excursions" component={<Login />} />
-          }
-        />
-        <Route
-          path="excursions"
-          element={
-            <RestrictedRoute redirectTo="/excursions" component={<Excursions />} />
-          }
-        />
-            <Route
-          path="videos"
-          element={
-            <RestrictedRoute redirectTo="/videos" component={<Videos/>} />
-          }
-        />
-             <Route
-          path="map"
-          element={
-            <RestrictedRoute redirectTo="/map" component={<Map/>} />
-          }
-        />
+        {isRegistered && (
+          <Route path="register" element={<Navigate to="/" replace />} />
+        )}
+        {isLoggedIn && (
+          <Route path="login" element={<Navigate to="/" replace />} />
+        )}
+        {!isLoggedIn && (
+          <>
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+          </>
+        )}
+        <Route path="excursions" element={<Excursions />} />
+        <Route path="videos" element={<Videos />} />
+        <Route path="map" element={<Map />} />
       </Route>
-      
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>): null }
      

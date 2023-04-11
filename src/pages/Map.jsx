@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {  fetchMap } from '../../src/redux/map/operations';
-// import DeleteIcon from '@mui/icons-material/Delete'
-
+import DeleteIcon from '@mui/icons-material/Delete'
+import { deleteMap } from '../../src/redux/map/operations';
 import MapForm from '../components/Map/MapForm';
-// import { selectUserRole } from '../../redux/auth/selectors';
+import { selectUserRole } from '../redux/auth/selectors';
 import { selectMap } from '../redux/map/selectors';
 import { useState, useEffect } from 'react';
 
@@ -21,8 +21,9 @@ const Map = () => {
     dispatch(fetchMap());
   }, [dispatch]);
 
+  const role = useSelector(selectUserRole);
   const maps = useSelector(selectMap);
-  console.log('maps', maps)
+
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -36,14 +37,21 @@ const Map = () => {
 
   return (
     <Container>
-      <ButtonContainer>
+      {role=== 'admin' &&  <ButtonContainer>
         <Button onClick={handleOpenModal}>Відкрити</Button>
-      </ButtonContainer>
+      </ButtonContainer>}
       <MapForm openModal={openModal} setOpenModal={setOpenModal} handleCloseModal={handleCloseModal} />
       {mapsList.map((map) => (
   <MapWrapper key={map._id.$oid}>
     <MapTitle>{map.title}</MapTitle>
     <MapLink  href={map.link} location={map.location} zoom={map.zoom} />
+    {role === 'admin'&& <Button
+                  color='secondary'
+                  type='button'
+                  onClick={() => dispatch(deleteMap(map._id))}
+                >
+                  <DeleteIcon />
+                </Button>}
   </MapWrapper>
 ))}
     </Container>

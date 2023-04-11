@@ -1,78 +1,56 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { logIn } from '../../redux/auth/operations';
-import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
-import { useState } from 'react';
+import { Box, Button, TextField, useTheme } from '@mui/material';
+import { useState, useCallback } from 'react';
 import Notiflix from 'notiflix';
-import { selectAuthError, selectIsLoggedIn } from '../../redux/auth/selectors';
 import { Loader } from '../Loader';
 
-export const LoginForm = ({ type }) => {
+const LoginForm = ({ handleLogin, error, isLoading }) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const error = useSelector(selectAuthError);
-  const isLoading = useSelector(selectIsLoggedIn);
-  const theme = useTheme();
-  const dispatch = useDispatch();
 
-  const validateInput = (element, onValidate) => {
+  const theme = useTheme();
+
+  const validateInput = useCallback((element, onValidate) => {
     if (element.value.match(element.pattern)) {
       onValidate(false);
       return true;
     }
     onValidate(true);
     return false;
-  };
+  }, []);
 
-  const handleEmailChange = event => {
+  const handleEmailChange = useCallback((event) => {
     const email = event.target;
     validateInput(email, setEmailError);
-  };
+  }, [validateInput]);
 
-  const handlePasswordChange = event => {
+  const handlePasswordChange = useCallback((event) => {
     const password = event.target;
     validateInput(password, setPasswordError);
-  };
+  }, [validateInput]);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const email = e.target.email;
-    const password = e.target.password;
-    const form = e.currentTarget;
-    const isValidEmail = validateInput(email, setEmailError);
-    const isValidPassword = validateInput(password, setPasswordError);
-    if (error) {
-      Notiflix.Notify.failure('произошла ошибка');
-    }
-    if (!isValidEmail || !isValidPassword) {
-      return;
-    }
-    dispatch(
-      logIn({
-        email: form.elements.email.value,
-        password: form.elements.password.value,
-      })
-    );
-    form.reset();
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const email = e.target.email;
+      const password = e.target.password;
+      const form = e.currentTarget;
+      const isValidEmail = validateInput(email, setEmailError);
+      const isValidPassword = validateInput(password, setPasswordError);
+      if (error) {
+        Notiflix.Notify.failure('произошла ошибка');
+      }
+      if (!isValidEmail || !isValidPassword) {
+        return;
+      }
+      handleLogin(form.elements.email.value, form.elements.password.value);
+      form.reset();
+    },
+    [error, handleLogin, validateInput]
+  );
 
   return (
     <>
       {isLoading && <Loader />}
-      <Typography
-        variant="h3"
-        align="center"
-        mt={-10}
-        sx={{
-          bgcolor: 'success.light',
-          fontWeight: 'light',
-          boxShadow: 1,
-          borderRadius: 2,
-          p: 2,
-          minWidth: 300,
-        }}
-      >
-        Login
-      </Typography>
       <Box
         component="form"
         noValidate
@@ -83,7 +61,7 @@ export const LoginForm = ({ type }) => {
         gap={2}
         maxWidth="500px"
         onSubmit={handleSubmit}
-        autoComplete="off"
+        autoComplete="on"
       >
         <TextField
           type="email"
@@ -96,7 +74,7 @@ export const LoginForm = ({ type }) => {
             style: { color: theme.palette.secondary.main },
             pattern: '^([0-9a-zA-Zd_.-])+@(([a-zA-Zd-])+.)+([a-zA-Zd]{2,4})+$',
           }}
-          autoComplete="off"
+          autoComplete="on"
           focused
           onChange={handleEmailChange}
           error={emailError}
@@ -114,14 +92,14 @@ export const LoginForm = ({ type }) => {
           size="small"
           inputProps={{
             style: { color: theme.palette.secondary.main },
-            pattern: '^.{4,8}$',
+            pattern: '^.{4,12}$',
           }}
           autoComplete="new-password"
           focused
           onChange={handlePasswordChange}
           error={passwordError}
           {...(passwordError && {
-            helperText: 'Password must contain from 4 to 8 characters',
+            helperText: 'Password must contain from 4 to 12 characters',
           })}
         />
         <Button variant="outlined" type="submit" color="primary">
@@ -131,3 +109,6 @@ export const LoginForm = ({ type }) => {
     </>
   );
 };
+
+
+export default LoginForm;
