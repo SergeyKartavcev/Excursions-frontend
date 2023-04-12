@@ -34,7 +34,6 @@ export const logIn = createAsyncThunk(
       const res = await api.post("/auth/login", credentials);
       setAuthHeader(res.data.token);
    
-      console.log("user data log", res.data);
       return res.data;
     } catch (error) {
       const message = [409, 401, 400].includes(error?.response?.status)
@@ -72,7 +71,6 @@ export const refreshUser = createAsyncThunk(
     try {
       setAuthHeader(token);
       const response = await api.get("/auth/current");
-      console.log("refresh", response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

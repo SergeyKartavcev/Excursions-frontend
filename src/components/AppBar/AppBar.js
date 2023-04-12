@@ -5,6 +5,7 @@ import { List } from '@mui/material';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { useSelector } from 'react-redux';
 
+
 export const AppBarr = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
 console.log('isloggedIn', isLoggedIn)
@@ -22,5 +23,6 @@ console.log('isloggedIn', isLoggedIn)
    <Navigation/>
       {isLoggedIn ? <UserMenu />  :  <AuthNav />}
     </List>
+
   );
 };

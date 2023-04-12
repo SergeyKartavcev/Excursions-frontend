@@ -14,10 +14,12 @@ const Videos = lazy(() => import('../pages/Videos'));
 const Map = lazy(() => import('../pages/Map'));
 const Register = lazy(() => import('../pages/Register/Register'));
 const Login = lazy(() => import('../pages/Login/Login'));
+const Reviews = lazy(() => import('../pages/Reviews'));
+
 
 export const App = () => {
   const dispatch = useDispatch();
-  // const { isRefreshing } = useAuth();
+
   // const isAuthenticated = useSelector(selectIsAuthenticated);
 useEffect(() => {
   dispatch(refreshUser());
@@ -46,6 +48,7 @@ console.log(isRefreshing)
         <Route path="excursions" element={<Excursions />} />
         <Route path="videos" element={<Videos />} />
         <Route path="map" element={<Map />} />
+        <Route path="rewiews" element={<Reviews />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>): null }
