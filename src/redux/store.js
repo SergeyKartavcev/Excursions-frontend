@@ -11,10 +11,12 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth/slice';
-import { excursionsReducer } from './Excursion/slice';
+import { excursionsReducer } from './excursion/slice';
 import { videosReducer } from './videos/slice';
 import { mapReducer } from './map/slice';
 import { reviewsReducer } from '../redux/reviews/slice';
+import { contactsReducer } from '../redux/contacts/slice';
+import { qvestsReducer } from './qvests/slice';
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -37,6 +39,8 @@ export const store = configureStore({
     videos: videosReducer,
     map: mapReducer,
     reviews: reviewsReducer, 
+    contacts: contactsReducer, 
+    qvests: qvestsReducer,
   },
   middleware,
 });

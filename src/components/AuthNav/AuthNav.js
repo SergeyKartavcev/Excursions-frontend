@@ -1,19 +1,38 @@
-import { NavLink } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { NavLink } from "react-router-dom";
+import { Box, Typography, IconButton, Hidden } from "@mui/material";
+import { AccountCircle, PersonAdd } from "@mui/icons-material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export const AuthNav = () => {
-  const activLink = ({ isActive }) => ({ color: isActive ? 'red' : 'black' });
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
+  // const activLink = ({ isActive }) => ({ color: isActive ? "red" : "black" });
 
   return (
-    <Box ml={3} display="flex">
-      <NavLink style={activLink} to="/register">
-        <Typography mr={3} ml={30} variant="h6" >
-          Реєстрація
+    <Box ml={3} mr={4} display="flex" alignItems="center" justifyContent="flex-end">
+      <NavLink
+        style={{ textDecoration: "none" }}
+        activeStyle={{ color: "red" }}
+        to="/register"
+      >
+        <Typography>
+          {matches ? "Реєстрація " : null}
+          <IconButton>
+            <PersonAdd />
+          </IconButton>
         </Typography>
       </NavLink>
-      <NavLink style={activLink} to="/login">
-        <Typography  variant="h6" >
-          Логінізація{' '}
+      <NavLink
+        style={{ textDecoration: "none" }}
+        to="/login"
+      >
+        <Typography>
+          {matches ? "Вхід " : null}
+          <IconButton>
+            <AccountCircle />
+          </IconButton>{" "}
         </Typography>
       </NavLink>
     </Box>

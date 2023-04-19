@@ -194,7 +194,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const ExcursionTitle = styled.h2`
+export const QvestTitle = styled.h2`
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -214,25 +214,25 @@ export const Image = styled.img`
   }
 `;
 
-export const ExcursionPrice = styled.p`
+export const QvestPrice = styled.p`
   font-size: 18px;
   margin-bottom: 10px;
 `;
 
-export const ExcursionRoute = styled.p`
+export const QvestRoute = styled.p`
   font-size: 16px;
 `;
 
-export const ExcursionDescription = styled.p`
+export const QvestDescription = styled.p`
   font-size: 16px;
 `;
-export const ExcursionStops = styled.p`
+export const QvestStops = styled.p`
   font-size: 16px;
 `;
-export const ExcursionLong = styled.p`
+export const QvestLong = styled.p`
   font-size: 16px;
 `;
-export const ExcursionTime = styled.p`
+export const QvestTime = styled.p`
   font-size: 16px;
 `;
 

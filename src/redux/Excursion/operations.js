@@ -49,3 +49,15 @@ export const deleteExcursion = createAsyncThunk('excursions/deleteExcursion', as
   }
 });
 
+export const getLastExcursions = createAsyncThunk(
+  'excursions/getLastExcursions',
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get(`/excursions`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+ 
+);

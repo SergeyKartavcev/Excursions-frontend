@@ -2,35 +2,37 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useCallback } from "react";
 import { Loader } from "../Loader";
 import {
-  selectIsLoadingExcursion,
-  selectExcursionItem,
-} from "../../redux/excursion/selectors";
-import { fetchExcursionItem } from "../../redux/excursion/operations";
-import CancelIcon from '@mui/icons-material/Cancel';
+  selectIsLoadingQvest,
+  selectQvestItem,
+} from "../../redux/qvests/selectors";
+import { fetchQvestItem } from "../../redux/qvests/operations";
+
 import {
   Background,
   ModalWrapper,
   Content,
   Wrapper,
-  ExcursionTitle,
+  QvestTitle,
   Image,
-  ExcursionPrice,
-  ExcursionDescription,
-  ExcursionRoute,
-  ExcursionStops,
-  ExcursionLong,
-  ExcursionTime,
+  QvestPrice,
+  QvestDescription,
+  QvestRoute,
+  QvestStops,
+  QvestLong,
+  QvestTime,
   Div,
   P,
-} from "./Excursion.styled";
+} from "./Qvests.styled";
+import CancelIcon from '@mui/icons-material/Cancel';
 
-export default function ExcursionModal({
+
+export default function QvestModal({
   handleCloseModal,
   showModal,
   setShowModal,
-  excursionId,
+  qvestId,
 }) {
-  const isLoading = useSelector(selectIsLoadingExcursion);
+  const isLoading = useSelector(selectIsLoadingQvest);
   const dispatch = useDispatch();
 
   const keyPress = useCallback(
@@ -54,12 +56,12 @@ export default function ExcursionModal({
   };
 
   useEffect(() => {
-    dispatch(fetchExcursionItem(excursionId));
-  }, [dispatch, excursionId]);
+    dispatch(fetchQvestItem(qvestId));
+  }, [dispatch, qvestId]);
 
-  const excursion = useSelector(selectExcursionItem);
-
-  return (
+  const qvest = useSelector(selectQvestItem);
+console.log("qvest",qvest)
+  return(
     <>
       {isLoading && <Loader />}
       {showModal && (
@@ -71,44 +73,45 @@ export default function ExcursionModal({
             <Content>
              
               <Wrapper>
-                <Image src={excursion.img} alt={excursion.title} />
+             
+                <Image src={qvest.img} alt={qvest.title} />
                 <Div>
-                  <ExcursionTitle>{excursion.title}</ExcursionTitle>
+                  <QvestTitle>{qvest.title}</QvestTitle>
                   <div style={{ display: "flex", alignItems: "baseline", }}>
                     {" "}
                     <P>Маршрут:</P>
-                    <ExcursionRoute>{excursion.route}</ExcursionRoute>
+                    <QvestRoute>{qvest.route}</QvestRoute>
                   </div>
 
                   <div  style={{ display: "flex", alignItems: "baseline" , }}>
                     <P>Опис: </P>
-                    <ExcursionDescription>
-                      {excursion.description}
-                    </ExcursionDescription>
+                    <QvestDescription>
+                      {qvest.description}
+                    </QvestDescription>
                   </div>
 
                   <div  style={{ display: "flex", alignItems: "baseline" }}>
                     {" "}
-                    <P>Зупинки:</P>
-                    <ExcursionStops>{excursion.stops}</ExcursionStops>
+                    <P>Зупиvent</P>
+                    <QvestStops>{qvest.stops}</QvestStops>
                   </div>
 
                   <div  style={{ display: "flex", alignItems: "baseline" }}>
                     {" "}
                     <P>Довжина маршруту:</P>
-                    <ExcursionLong>{excursion.long}</ExcursionLong>
+                    <QvestLong>{qvest.long}</QvestLong>
                   </div>
 
                   <div  style={{ display: "flex", alignItems: "baseline" }}>
                     {" "}
                     <P>Тривалість єкскурсії:</P>
-                    <ExcursionTime>{excursion.time}</ExcursionTime>
+                    <QvestTime>{qvest.time}</QvestTime>
                   </div>
 
                   <div  style={{ display: "flex", alignItems: "baseline" }}>
                     {" "}
                     <P>Вартість: </P>
-                    <ExcursionPrice>{excursion.price}</ExcursionPrice>
+                    <QvestPrice>{qvest.price}</QvestPrice>
                   </div>
                 </Div>
                 <CancelIcon sx={{mr: 1, mt: 1,  fontSize: 40  }} onClick={handleClickBackground}/>

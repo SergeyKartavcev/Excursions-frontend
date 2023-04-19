@@ -1,16 +1,16 @@
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchExcursions } from "../../redux/Excursion/operations";
-import { getUserInfo } from "../../redux/auth/operations";
+import { fetchExcursions } from "../redux/excursion/operations";
+import { getUserInfo } from "../redux/auth/operations";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteExcursion } from "../../redux/Excursion/operations";
+import { deleteExcursion } from "../redux/excursion/operations";
 import styled from "styled-components";
-import ExcursionForm from "../../components/Excursion/ExcursionForm";
-import { selectUserRole } from "../../redux/auth/selectors";
-import { selectExcursions } from "../../redux/Excursion/selectors";
+import ExcursionForm from "../components/Excursion/ExcursionForm";
+import { selectUserRole } from "../redux/auth/selectors";
+import { selectExcursions } from "../redux/excursion/selectors";
 import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-import ExcursionModal from "../../components/Excursion/ExcursionModal";
+import ExcursionModal from "../components/Excursion/ExcursionModal";
 
 const Excursions = () => {
   const [showModal, setShowModal] = useState(false);
@@ -26,7 +26,7 @@ const Excursions = () => {
   const excursions = useSelector(selectExcursions);
 
   const role = useSelector(selectUserRole);
-  console.log("user role", role);
+  
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -63,16 +63,27 @@ const Excursions = () => {
         <Grid container spacing={3}>
           {excursions.map((excursion) => (
             <Grid item xs={12} sm={6} md={4} key={excursion._id}>
-              <ExcursionWrapper>
+              <ExcursionWrapper
+                onClick={() =>
+                  handleOpenExc(excursion._id, console.log(excursion._id))
+                }
+              >
                 <ExcursionTitle>{excursion.title}</ExcursionTitle>
                 <ExcursionImage src={excursion.img} alt={excursion.title} />
+
+                <ExcursionLong>
+                  {" "}
+                  Довжина мршруту: {excursion.long}
+                </ExcursionLong>
+                <ExcursionTime> Тривалість: {excursion.time}</ExcursionTime>
                 <ButtonS
                   onClick={() =>
                     handleOpenExc(excursion._id, console.log(excursion._id))
                   }
                 >
-                  Відкрити
+                  Деталі
                 </ButtonS>
+
                 {role === "admin" && (
                   <Button
                     color="secondary"
@@ -123,6 +134,28 @@ const ExcursionTitle = styled.h2`
   line-height: 18px;
   letter-spacing: -0.01em;
   margin-bottom: 20px;
+  color: ${(props) => props.theme.colors.black};
+  word-break: break-all;
+`;
+
+const ExcursionLong = styled.h2`
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  margin-right: 90px;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+  color: ${(props) => props.theme.colors.black};
+  word-break: break-all;
+`;
+
+const ExcursionTime = styled.h2`
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  margin-right: 90px;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
   color: ${(props) => props.theme.colors.black};
   word-break: break-all;
 `;

@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
-import { addExcursion } from "../../redux/excursion/operations";
-import { selectIsLoadingExcursion } from "../../redux/excursion/selectors";
+import { addQvest } from "../../redux/qvests/operations";
+import { selectIsLoadingQvest } from "../../redux/qvests/selectors";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Loader } from "../Loader";
 import {
@@ -16,9 +16,9 @@ import {
   ModalOverlay,
   ModalContent,
   Background,
-} from "./Excursion.styled";
+} from "./Qvests.styled";
 
-export default function ExcursionForm({ showModal, setShowModal }) {
+export default function EventForm({ showModal, setShowModal }) {
   const [img, setImg] = useState(null);
   const dispatch = useDispatch();
 
@@ -44,12 +44,12 @@ export default function ExcursionForm({ showModal, setShowModal }) {
       data.append("time", values.time);
       data.append("price", values.price);
 
-      dispatch(addExcursion(data));
+      dispatch(addQvest(data));
       closeModal();
     },
   });
 
-  const isLoading = useSelector(selectIsLoadingExcursion);
+  const isLoading = useSelector(selectIsLoadingQvest);
 
   const onImageChange = (e) => {
     const { files } = e.currentTarget;
@@ -181,7 +181,8 @@ export default function ExcursionForm({ showModal, setShowModal }) {
     </>
   );
 }
-ExcursionForm.propTypes = {
+EventForm.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
 };
+

@@ -2,7 +2,8 @@ import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AppBarr } from './AppBar/AppBar';
 import { Suspense } from 'react';
-import { AppBar, Box } from '@mui/material';
+import {  Box } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
 import { SecondNav } from '../components/Navigation/SecondNav';
 export const Layout = () => {
   return (

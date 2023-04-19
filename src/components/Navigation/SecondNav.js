@@ -6,44 +6,100 @@ export const SecondNav = () => {
     <List
       sx={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: { xs: "column", sm: "row" },
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <NavLink to="/rewiews" style={{ textDecoration: "none" }} activeStyle={{ color: "red" }}>
+      <NavLink
+        to="/excursions"
+        style={{ textDecoration: "none" }}
+        activestyle={{ color: "red" }}
+      >
         <Button
           sx={{
-            ml: 50,
-            mr: 5,
+            m: { xs: 1, sm: 2 },
             color: "black",
             boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
             backgroundColor: "white",
             "&:hover": {
               backgroundColor: "secondary.main",
-              color: "white"
-            }
+              color: "white",
+            },
           }}
           variant="contained"
           color="primary"
         >
-          Відгуки
+          Екскурсії
         </Button>
       </NavLink>
-      <NavLink to="/contacts" style={{ textDecoration: "none" }} activeStyle={{ color: "red" }}>
+
+      <NavLink
+        to="/qvests"
+        style={{ textDecoration: "none" }}
+        activestyle={{ color: "red" }}
+      >
         <Button
           sx={{
-            mr: 5,
+            m: { xs: 1, sm: 2 },
             color: "black",
             boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
             backgroundColor: "white",
             "&:hover": {
               backgroundColor: "secondary.main",
-              color: "white"
-            }
+              color: "white",
+            },
           }}
           variant="contained"
           color="primary"
         >
-          Контакти
+          Квести
+        </Button>
+      </NavLink>
+
+      <NavLink
+        to="/videos"
+        style={{ textDecoration: "none" }}
+        activestyle={{ color: "red" }}
+      >
+        <Button
+          sx={{
+            m: { xs: 1, sm: 2 },
+            color: "black",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+            backgroundColor: "white",
+            "&:hover": {
+              backgroundColor: "secondary.main",
+              color: "white",
+            },
+          }}
+          variant="contained"
+          color="primary"
+        >
+          Відео
+        </Button>
+      </NavLink>
+
+      <NavLink
+        to="/map"
+        style={{ textDecoration: "none" }}
+        activestyle={{ color: "red" }}
+      >
+        <Button
+          sx={{
+            m: { xs: 1, sm: 2 },
+            color: "black",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+            backgroundColor: "white",
+            "&:hover": {
+              backgroundColor: "secondary.main",
+              color: "white",
+            },
+          }}
+          variant="contained"
+          color="primary"
+        >
+          Карта
         </Button>
       </NavLink>
     </List>

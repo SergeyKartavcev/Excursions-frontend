@@ -9,13 +9,14 @@ import { refreshUser } from '../redux/auth/operations';
 import { selectIsRefreshing, selectIsLoggedIn, selectIsRegistered } from '../redux/auth/selectors';
 
 const Home = lazy(() => import('../pages/Home'));
-const Excursions = lazy(() => import('../pages/Excursion/Excursion'));
+const Excursions = lazy(() => import('../pages/Excursion'));
+const Qvests = lazy(() => import('../pages/Qvests'));
 const Videos = lazy(() => import('../pages/Videos'));
 const Map = lazy(() => import('../pages/Map'));
 const Register = lazy(() => import('../pages/Register/Register'));
 const Login = lazy(() => import('../pages/Login/Login'));
 const Reviews = lazy(() => import('../pages/Reviews'));
-
+const Contacts = lazy(() => import('../pages/Contacts'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -46,9 +47,11 @@ console.log(isRefreshing)
           </>
         )}
         <Route path="excursions" element={<Excursions />} />
+        <Route path="qvests" element={<Qvests />} />
         <Route path="videos" element={<Videos />} />
         <Route path="map" element={<Map />} />
         <Route path="rewiews" element={<Reviews />} />
+        <Route path="contacts" element={<Contacts />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>): null }
