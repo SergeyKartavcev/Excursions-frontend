@@ -1,88 +1,90 @@
-import { Box, Typography } from "@mui/material";
-import {  useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../redux/auth/selectors";
-// import { useEffect, useState } from "react";
-// import { fetchEvents } from "../redux/qvests/operations";
-// import { getUserInfo } from "../redux/auth/operations";
-// import { selectEvents } from "../redux/qvests/selectors";
-// import { selectUserRole } from "../redux/auth/selectors";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import { deleteEvent } from "../redux/qvests/operations";
+import {
+  Box,
+  Card,
+  CardMedia,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Button,
+} from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+// import { selectIsLoggedIn } from "../redux/auth/selectors";
+import { useEffect, useState } from "react";
+import { fetchEvents } from "../redux/events/operations";
+import { getUserInfo } from "../redux/auth/operations";
+import { selectEvents } from "../redux/events/selectors";
+import { selectUserRole } from "../redux/auth/selectors";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteEvent } from "../redux/events/operations";
+import EventForm from "../components/Events/EventForm";
+import EventModal from "../components/Events/EventModal";
+import { Grid } from "@mui/material";
+import styled from "styled-components";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-// import EventForm from "../components/Qvests/QvestsForm";
-// import EventModal from "../components/Qvests/QvestsModal";
-// import { Grid } from "@mui/material";
-// import styled from "styled-components";
-// import { Button } from "@mui/material";
 const Home = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  // const [showModal, setShowModal] = useState(false);
-  // const [showEventModal, setShowEventModal] = useState(false);
-  // const [selectedEventId, setSelectedEventId] = useState(null);
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [showModal, setShowModal] = useState(false);
+  const [showEventModal, setShowEventModal] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getUserInfo());
-  //   dispatch(fetchEvents());
-  // }, [dispatch]);
-  // const events = useSelector(selectEvents);
+  useEffect(() => {
+    dispatch(getUserInfo());
+    dispatch(fetchEvents());
+  }, [dispatch]);
+  const events = useSelector(selectEvents);
 
-  // const role = useSelector(selectUserRole);
-  // console.log("user role", role);
+  const role = useSelector(selectUserRole);
+  console.log("user role", role);
 
-  // const handleOpenModal = () => {
-  //   setShowModal(true);
-  // };
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-  // const handleOpenEve = (_id) => {
-  //   setSelectedEventId(_id);
-  //   setShowEventModal(true);
-  // };
+  const handleOpenEve = (_id) => {
+    setSelectedEventId(_id);
+    setShowEventModal(true);
+  };
 
-  // const handleCloseEve = () => {
-  //   setSelectedEventId(null);
-  //   setShowEventModal(false);
-  // };
+  const handleCloseEve = () => {
+    setSelectedEventId(null);
+    setShowEventModal(false);
+  };
 
   return (
     <Box
       textAlign={"center"}
-      mt={30}
-      borderRadius={5}
+      mt={1}
       sx={{
         fontWeight: "light",
         boxShadow: 1,
-        borderRadius: 2,
+        borderRadius: 5,
         p: 2,
         minWidth: 300,
-        bgcolor: "success.light",
+        border: "2px solid blue",
       }}
     >
       <Typography
-        alignItems={"center"}
         variant="h2"
-        color="accent "
         fontWeight="fontWeightBold"
+        color="primary"
+        textAlign="center"
         mb={4}
+        sx={{
+          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+          letterSpacing: "2px",
+          textTransform: "uppercase",
+        }}
       >
         Экскурсії по Бугському гарду
       </Typography>
-      <Typography
-        variant="h2"
-        component="h1"
-        color="secondary"
-        fontWeight="fontWeightBold"
-        mb={4}
-      >
-        {isLoggedIn
-          ? ` На вас чекають незабутні пригоди разом з нами !!!`
-          : "зареэструйся щоб слідкувати за нашими новинами!"}
-      </Typography>
-      {/* <Container>
+      <Container>
         {role === "admin" && (
           <ButtonContainer>
             <Button onClick={handleOpenModal}>Відкрити</Button>
@@ -93,51 +95,131 @@ const Home = () => {
           setShowModal={setShowModal}
           handleCloseModal={handleCloseModal}
         />
-        {events.length === 0 && <p>Немає доступних екскурсій</p>}
-        {events.length > 0 && (
-          <Grid container spacing={3}>
+
+        <Accordion sx={{ width: "100%" }}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography
-              variant="h4"
-              color="accent "
-              fontWeight="fontWeightBold"
+              variant="h6"
+              color="primary"
+              fontWeight="bold"
+              sx={{
+                textAlign: "center",
+                marginBottom: "20px",
+                borderBottom: "2px solid #ccc",
+                paddingBottom: "10px",
+              }}
             >
-         
-              Наші Найближчі подій:
+              Наші найближчі події
             </Typography>
-            {events.map((event) => (
-              <Grid item xs={12} sm={6} md={4} key={event._id}>
-                <EventWrapper
-                  onClick={() =>
-                    handleOpenEve(event._id, console.log(event._id))
-                  }
-                >
-                  <EventTitle>{event.title}</EventTitle>
-                  <EventImage src={event.img} alt={event.title} />
-
-                  <EventLong> Довжина мршруту: {event.long}</EventLong>
-                  <EventTime> Тривалість: {event.time}</EventTime>
-                  <ButtonS
-                    onClick={() =>
-                      handleOpenEve(event._id, console.log(event._id))
-                    }
-                  >
-                    Деталі
-                  </ButtonS>
-
-                  {role === "admin" && (
-                    <Button
-                      color="secondary"
-                      type="button"
-                      onClick={() => dispatch(deleteEvent(event._id))}
+          </AccordionSummary>
+          <AccordionDetails>
+            {events.length === 0 && <p>Немає доступних екскурсій</p>}
+            {events.length > 0 && (
+              <Grid container spacing={3}>
+                {events.map((event) => (
+                  <Grid item xs={12} sm={6} md={4} key={event._id}>
+                    <Card
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: 280,
+                        height: 380,
+                        borderRadius: 5,
+                        margin: 10,
+                        color: "black",
+                        flexBasis: 300,
+                        cursor: "pointer",
+                        boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)",
+                        transition: "transform 0.2s",
+                        "&:hover": {
+                          backgroundColor: "rgba(0, 0, 0, 0.1)",
+                          transform: "scale(1.1)",
+                        },
+                        "@media (max-width: 768px)": {
+                          width: 200,
+                          height: 280,
+                          fontSize: 14,
+                        },
+                      }}
+                      onClick={() => handleOpenEve(event._id)}
                     >
-                      <DeleteIcon />
-                    </Button>
-                  )}
-                </EventWrapper>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                        sx={{
+                          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                          letterSpacing: "1px",
+                          textTransform: "uppercase",
+                          mt: 3,
+                        }}
+                      >
+                        {event.title}
+                      </Typography>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={event.img}
+                        alt={event.title}
+                      />
+                      <Typography
+                        variant="body2"
+                        color="blue"
+                        mt={3}
+                        sx={{
+                          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Дата прохдження: {event.date}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="blue"
+                        sx={{
+                          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Час: {event.time}
+                      </Typography>
+
+                      <Button
+                        size="small"
+                        onClick={() => handleOpenEve(event._id)}
+                        sx={{
+                          color: "white",
+                          backgroundColor: "black",
+                          borderRadius: "20px",
+                          padding: "2px 5px",
+                          mt: 3,
+                          "&:hover": {
+                            backgroundColor: "gray",
+                          },
+                        }}
+                      >
+                        Деталі
+                      </Button>
+
+                      {role === "admin" && (
+                        <Button
+                          color="secondary"
+                          type="button"
+                          onClick={() => dispatch(deleteEvent(event._id))}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      )}
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
-        )}
+            )}
+          </AccordionDetails>
+        </Accordion>
+
         {selectedEventId && (
           <EventModal
             eventId={selectedEventId}
@@ -146,99 +228,31 @@ const Home = () => {
             setShowModal={setShowEventModal}
           />
         )}
-      </Container> */}
+      </Container>
     </Box>
   );
 };
 
-// const EventWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   width: 280px;
-//   height: 350px;
-//   border: 1px solid #ccc;
-//   border-radius: 20px;
-//   margin: 10px;
-//   color: black;
-//   flex-basis: 300px;
-//   /* position: relative; */
-//   margin: 10px;
-//   cursor: pointer;
-// `;
+export const Container = styled.div`
+  padding: 0 ${({ theme }) => theme.spacing[5]}px;
+  margin: auto;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: ${({ theme }) => theme.breakpoints.mobile};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet[0]}) {
+    padding: 0 ${({ theme }) => theme.spacing[8]}px;
+    width: ${({ theme }) => theme.breakpoints.tablet[0]};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    padding: 0 ${({ theme }) => theme.spacing[4]}px;
+    width: ${({ theme }) => theme.breakpoints.desktop};
+  }
+`;
 
-// const EventTitle = styled.h2`
-//   font-style: normal;
-//   font-weight: 700;
-//   font-size: 16px;
-//   line-height: 18px;
-//   letter-spacing: -0.01em;
-//   margin-bottom: 20px;
-//   color: ${(props) => props.theme.colors.black};
-//   word-break: break-all;
-// `;
-
-// const EventLong = styled.h2`
-//   font-style: normal;
-//   font-weight: 300;
-//   font-size: 16px;
-//   margin-right: 90px;
-//   letter-spacing: -0.01em;
-//   margin-bottom: 2px;
-//   color: ${(props) => props.theme.colors.black};
-//   word-break: break-all;
-// `;
-
-// const EventTime = styled.h2`
-//   font-style: normal;
-//   font-weight: 300;
-//   font-size: 16px;
-//   margin-right: 90px;
-//   letter-spacing: -0.01em;
-//   margin-bottom: 2px;
-//   color: ${(props) => props.theme.colors.black};
-//   word-break: break-all;
-// `;
-
-// const EventImage = styled.img`
-//   width: 95%;
-//   height: 70%;
-//   margin-bottom: 10px;
-//   border-radius: 10px;
-// `;
-
-// export const Container = styled.div`
-//   padding: 0 ${({ theme }) => theme.spacing[5]}px;
-//   margin: auto;
-//   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-//     max-width: ${({ theme }) => theme.breakpoints.mobile};
-//   }
-//   @media (min-width: ${({ theme }) => theme.breakpoints.tablet[0]}) {
-//     padding: 0 ${({ theme }) => theme.spacing[8]}px;
-//     width: ${({ theme }) => theme.breakpoints.tablet[0]};
-//   }
-//   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-//     padding: 0 ${({ theme }) => theme.spacing[4]}px;
-//     width: ${({ theme }) => theme.breakpoints.desktop};
-//   }
-// `;
-
-// export const ButtonS = styled.button`
-//   background-color: #008cba;
-//   color: white;
-//   padding: 5px 10px;
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
-//   margin-left: 160px;
-//   margin-bottom: 8px;
-// `;
-
-// const ButtonContainer = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   margin-top: 10px;
-// `;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+`;
 
 export default Home;

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Box, Typography, IconButton, Hidden } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import { AccountCircle, PersonAdd } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -14,7 +14,7 @@ export const AuthNav = () => {
     <Box ml={3} mr={4} display="flex" alignItems="center" justifyContent="flex-end">
       <NavLink
         style={{ textDecoration: "none" }}
-        activeStyle={{ color: "red" }}
+       
         to="/register"
       >
         <Typography>

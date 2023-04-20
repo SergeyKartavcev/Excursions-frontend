@@ -17,6 +17,7 @@ import { mapReducer } from './map/slice';
 import { reviewsReducer } from '../redux/reviews/slice';
 import { contactsReducer } from '../redux/contacts/slice';
 import { qvestsReducer } from './qvests/slice';
+import { eventsReducer } from './events/slice';
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -41,6 +42,7 @@ export const store = configureStore({
     reviews: reviewsReducer, 
     contacts: contactsReducer, 
     qvests: qvestsReducer,
+    events: eventsReducer,
   },
   middleware,
 });

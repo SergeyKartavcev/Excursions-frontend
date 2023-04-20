@@ -25,7 +25,7 @@ const ReviewsForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Typography variant="h5">Оставить отзыв</Typography>
+      <Typography variant="h5">Залишити відгук</Typography>
       <TextField
         label="Ваше Ім'я"
         fullWidth
@@ -54,7 +54,7 @@ const ReviewsForm = () => {
         margin="normal"
       />
       <Button variant="contained" color="primary" type="submit">
-        Добавить отзыв
+        Залишити відгук
       </Button>
     </form>
   );
