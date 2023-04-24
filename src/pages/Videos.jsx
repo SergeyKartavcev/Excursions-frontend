@@ -47,7 +47,7 @@ const Videos = () => {
         setOpenModal={setOpenModal}
         handleCloseModal={handleCloseModal}
       />
-      {videos.length === 0 && <p>Немає доступних екскурсій</p>}
+      {videos.length === 0 && <p>Немає доступних відео</p>}
       {videos.length > 0 && (
         <Grid container spacing={3}>
           {videos.map((video) => (

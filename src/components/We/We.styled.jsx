@@ -236,7 +236,13 @@ export const ExcursionTime = styled.p`
   font-size: 16px;
 `;
 
+export const Div = styled.div`
+  margin-left: 10px;
 
+  @media (min-width: 768px) {
+    margin-left: 20px;
+  }
+`;
 
 export const P = styled.p`
   font-style: normal;

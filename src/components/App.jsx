@@ -17,6 +17,8 @@ const Register = lazy(() => import('../pages/Register/Register'));
 const Login = lazy(() => import('../pages/Login/Login'));
 const Reviews = lazy(() => import('../pages/Reviews'));
 const Contacts = lazy(() => import('../pages/Contacts'));
+const We = lazy(() => import('../pages/We'));
+
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -52,6 +54,7 @@ console.log(isRefreshing)
         <Route path="map" element={<Map />} />
         <Route path="rewiews" element={<Reviews />} />
         <Route path="contacts" element={<Contacts />} />
+        <Route path="we" element={<We/>} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>): null }

@@ -6,7 +6,18 @@ import {
   selectEventItem,
 } from "../../redux/events/selectors";
 import { fetchEventItem } from "../../redux/events/operations";
-import CancelIcon from '@mui/icons-material/Cancel';
+import CancelIcon from "@mui/icons-material/Cancel";
+import {
+  Box,
+  Card,
+  CardMedia,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Button,
+  Grid,
+} from "@mui/material";
 import {
   Background,
   ModalWrapper,
@@ -61,47 +72,176 @@ export default function ExcursionModal({
     <>
       {isLoading && <Loader />}
       {showModal && (
-        <Background onClick={handleClickBackground}>
-          <ModalWrapper
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            zIndex: 999,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={handleClickBackground}
+        >
+          <Box
+            sx={{
+              maxWidth: "1300px",
+              backgroundColor: "white",
+              borderRadius: "20px",
+              border: "2px solid blue", 
+            }}
             showModal={showModal}
             onClick={(e) => e.stopPropagation()}
           >
-            <Content>
-             
-              <Wrapper>
-                <Image src={event.img} alt={event.title} />
-                <Div>
-                  <ExcursionTitle>{event.title}</ExcursionTitle>
-                  <div style={{ display: "flex", alignItems: "baseline", }}>
-                    {" "}
-                    <P>Дата</P>
-                    <ExcursionRoute>{event.date}</ExcursionRoute>
-                  </div>
+            <Box>
+              <Grid container spacing={3} justifyContent="center">
+                <Grid item xs={12} sx={{ maxWidth: 800 }}>
+                  <Box display={"flex"}>
+                    <Box  sx={{
+                        width: "6000px",
+                          borderRadius: "10px"
+                        }} m={2}>
+                      <CardMedia
+                        component="img"
+                        height={640}
+                        image={event.img}
+                        alt={event.title}
+                      />
+                    </Box>
 
-                  <div  style={{ display: "flex", alignItems: "baseline" , }}>
-                    <P>Опис: </P>
-                    <ExcursionDescription>
-                      {event.description}
-                    </ExcursionDescription>
-                  </div>
+                    <Box ml={3} mt={3}>
+                      <Typography
+                        variant="h4"
+                        fontWeight="fontWeightBold"
+                        color="primary"
+                        textAlign="center"
+                        mb={4}
+                        sx={{
+                          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                          letterSpacing: "2px",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        {event.title}
+                      </Typography>
+                      <Box mb={3} display={"flex"}>
+                        {" "}
+                        <Typography
+                          fontWeight="fontWeightBold"
+                          color="primary"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Дата:
+                        </Typography>
+                        <Typography  fontWeight="fontWeightBold"
+                          color="grey"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}>{event.date}</Typography>
+                      </Box>
 
-                  <div  style={{ display: "flex", alignItems: "baseline" }}>
-                    {" "}
-                    <P> час:</P>
-                    <ExcursionTime>{event.time}</ExcursionTime>
-                  </div>
+                      <Box  mb={3}display={"flex"}>
+                        <Typography
+                          fontWeight="fontWeightBold"
+                          color="primary"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Опис:{" "}
+                        </Typography>
+                        <Typography  fontWeight="fontWeightBold"
+                          color="grey"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}>{event.description}</Typography>
+                      </Box>
 
-                  <div  style={{ display: "flex", alignItems: "baseline" }}>
-                    {" "}
-                    <P>Вартість: </P>
-                    <ExcursionPrice>{event.price}</ExcursionPrice>
-                  </div>
-                </Div>
-                <CancelIcon sx={{mr: 1, mt: 1,  fontSize: 40  }} onClick={handleClickBackground}/>
-              </Wrapper>
-            </Content>
-          </ModalWrapper>
-        </Background>
+                      <Box  mb={3}display={"flex"}>
+                        {" "}
+                        <Typography
+                          fontWeight="fontWeightBold"
+                          color="primary"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          {" "}
+                          Час:
+                        </Typography>
+                        <Typography  fontWeight="fontWeightBold"
+                          color="grey"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}>{event.time}</Typography>
+                      </Box>
+
+                      <Box  mb={3} display={"flex"}>
+                        {" "}
+                        <Typography
+                          fontWeight="fontWeightBold"
+                          color="primary"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Вартість:{" "}
+                        </Typography>
+                        <Typography  fontWeight="fontWeightBold"
+                          color="grey"
+                          variant="h8"
+                          mr={2}
+                          sx={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                          }}>{event.price}</Typography>
+                      </Box>
+                    </Box>
+                    <CancelIcon
+                      sx={{ mr: 1, mt: 1, fontSize: 40 }}
+                      onClick={handleClickBackground}
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Box>
       )}
     </>
   );

@@ -30,19 +30,23 @@ export default function ContactList() {
   }, [dispatch]);
 
   const contacts = useSelector(selectContacts);
-const role = useSelector(selectUserRole);
-  console.log("contacts", contacts);
+  const role = useSelector(selectUserRole);
   return (
     <List
+    
       sx={{ width: "100%", bgcolor: "background.paper", marginTop: "100px" }}
     >
       {contacts.map((contact) => (
         <div key={contact._id}>
-          <ListItem alignItems="flex-start">
-            <ListItemText
-              primary={contact.name}
-              secondary={
+          <ListItem  style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}>
+        
+             
                 <>
+                <Box >
                   <Box
                     style={{
                       display: "flex",
@@ -52,15 +56,15 @@ const role = useSelector(selectUserRole);
                   >
                     <Typography
                       variant="h4"
-                      component="h4"
-                      color="primari"
+                      component="div"
+                      color="primary" // исправлено
                       fontWeight="fontWeightBold"
                     >
                       Haша адреса:
                     </Typography>
                     <Typography
                       variant="h4"
-                      component="h4"
+                      component="div"
                       color="primary"
                       fontWeight="fontWeightBold"
                       ml={5}
@@ -80,7 +84,7 @@ const role = useSelector(selectUserRole);
                     {" "}
                     <Typography
                       variant="h5"
-                      component="h5"
+                      component="div"
                       color="primary"
                       fontWeight="fontWeightBold"
                       ml={2}
@@ -153,9 +157,10 @@ const role = useSelector(selectUserRole);
                       Видалити
                     </Button>
                   )}
+                  </Box>
                 </>
-              }
-            />
+             
+         
           </ListItem>
           <Divider variant="inset" component="li" />
         </div>

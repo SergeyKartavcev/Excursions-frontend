@@ -53,6 +53,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import PhoneIcon from "@mui/icons-material/Phone";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 
 export const Navigation = () => {
   const activLink = ({ isActive }) => ({ color: isActive ? "red" : "black" });
@@ -85,6 +86,11 @@ export const Navigation = () => {
       icon: <PhoneIcon />,
       link: "/contacts",
     },
+    {
+      text: "Про Нас",
+      icon: <SupervisorAccountIcon />,
+      link: "/we",
+    },
   ];
 
   const drawerList = (
@@ -99,7 +105,7 @@ export const Navigation = () => {
           style={activLink}
         >
           <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.text} />
+          <ListItemText primary={item.text}  />
         </ListItem>
       ))}
     </List>
@@ -135,15 +141,16 @@ export const Navigation = () => {
         sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center" }}
       >
         {menuItems.map((item, index) => (
-          <ListItem
-            key={item.text}
-            button
-            component={NavLink}
-            to={item.link}
-            style={activLink}
-          >
+       <ListItem
+       button
+       key={item.text}
+       component={NavLink}
+       to={item.link}
+       onClick={toggleDrawer(false)}
+       style={activLink}
+     >
             {item.icon}
-            <ListItemText primary={item.text} />
+            <ListItemText primary={item.text} sx={{ width: 200 }}/>
           </ListItem>
         ))}
       </List>

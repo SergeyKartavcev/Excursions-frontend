@@ -7,6 +7,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   Button,
+  Grid
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 // import { selectIsLoggedIn } from "../redux/auth/selectors";
@@ -19,7 +20,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteEvent } from "../redux/events/operations";
 import EventForm from "../components/Events/EventForm";
 import EventModal from "../components/Events/EventModal";
-import { Grid } from "@mui/material";
 import styled from "styled-components";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -58,6 +58,8 @@ const Home = () => {
   };
 
   return (
+    <Grid container spacing={3} justifyContent="center">
+    <Grid item xs={12} sx={{ maxWidth: 800 }}>
     <Box
       textAlign={"center"}
       mt={1}
@@ -84,7 +86,7 @@ const Home = () => {
       >
         Экскурсії по Бугському гарду
       </Typography>
-      <Container>
+    
         {role === "admin" && (
           <ButtonContainer>
             <Button onClick={handleOpenModal}>Відкрити</Button>
@@ -228,26 +230,13 @@ const Home = () => {
             setShowModal={setShowEventModal}
           />
         )}
-      </Container>
+    
     </Box>
+    </Grid>
+  </Grid>
   );
 };
 
-export const Container = styled.div`
-  padding: 0 ${({ theme }) => theme.spacing[5]}px;
-  margin: auto;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    max-width: ${({ theme }) => theme.breakpoints.mobile};
-  }
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet[0]}) {
-    padding: 0 ${({ theme }) => theme.spacing[8]}px;
-    width: ${({ theme }) => theme.breakpoints.tablet[0]};
-  }
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    padding: 0 ${({ theme }) => theme.spacing[4]}px;
-    width: ${({ theme }) => theme.breakpoints.desktop};
-  }
-`;
 
 const ButtonContainer = styled.div`
   display: flex;

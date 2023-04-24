@@ -18,6 +18,7 @@ import { reviewsReducer } from '../redux/reviews/slice';
 import { contactsReducer } from '../redux/contacts/slice';
 import { qvestsReducer } from './qvests/slice';
 import { eventsReducer } from './events/slice';
+import { weReducer } from './we/slice';
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -43,6 +44,7 @@ export const store = configureStore({
     contacts: contactsReducer, 
     qvests: qvestsReducer,
     events: eventsReducer,
+    we: weReducer,
   },
   middleware,
 });
